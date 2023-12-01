@@ -5,7 +5,7 @@ fn main() {
     let calibration_lines = read_file("./calibration-doc-example.txt");
 
     let calibration_values_sum = calibration_values_sum(calibration_lines.clone());
-    println!("@@@ Calibration sum: {:?}", calibration_values_sum);
+    println!("Calibration sum: {:?}", calibration_values_sum);
 }
 
 // Read a text file and return a vector of strings
@@ -17,35 +17,28 @@ fn read_file(filename: &str) -> Vec<String> {
     contents.lines().map(|s| s.to_string()).collect()
 }
 
+/// Parse a line of text that should contain at least one digit
+/// Return the concatenation of the first and last digit found to form a single 2-digit number.
 fn calibration_parse_line(line: String) -> u32 {
-    let mut result = 0;
-    let mut last_digit = false;
-    let mut last_digit_value = 0;
+    let mut last_digit = 0;
+    let mut first_digit = 0;
+    let mut first_digit_found = false;
 
     for c in line.chars() {
         if c.is_digit(10) {
-            if last_digit {
-                last_digit_value = (last_digit_value * 10) + c.to_digit(10).unwrap();
-            } else {
-                last_digit_value = c.to_digit(10).unwrap();
+            if !first_digit_found {
+                first_digit = c.to_digit(10).unwrap();
+                first_digit_found = true;
             }
-            last_digit = true;
-        } else {
-            if last_digit {
-                result += last_digit_value;
-                last_digit_value = 0;
-                last_digit = false;
-            }
+            // replace the last digit with the current one to get truely the last digit
+            last_digit = c.to_digit(10).unwrap();
         }
     }
 
-    if last_digit {
-        result += last_digit_value;
-    }
-
-    result
+    first_digit * 10 + last_digit
 }
 
+/// Sum all the calibration values
 fn calibration_values_sum(calibration_lines: Vec<String>) -> u32 {
     calibration_lines
         .iter()
