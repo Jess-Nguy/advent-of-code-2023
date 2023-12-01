@@ -32,12 +32,6 @@ mod test_calibration_parse_line {
     use super::*;
 
     #[test]
-    fn test_read_file() {
-        let calibration_values = read_file("./calibration-doc-example.txt");
-        assert_eq!(calibration_values.len(), 4);
-    }
-
-    #[test]
     fn test_calibration_parse_line_with_one_digit() {
         let line = String::from("treb7uchet");
         let result = calibration_parse_line(line);

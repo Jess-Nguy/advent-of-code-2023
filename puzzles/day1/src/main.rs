@@ -1,6 +1,7 @@
 mod part_1;
 
 use crate::part_1::calibration_values_sum;
+use colored::Colorize;
 use std::fs::File;
 use std::io::Read;
 
@@ -9,7 +10,10 @@ fn main() {
     // let calibration_lines = read_file("./calibration-doc-example.txt");
 
     let calibration_values_sum = calibration_values_sum(calibration_lines.clone());
-    println!("Calibration sum: {:?}", calibration_values_sum);
+    println!(
+        "Calibration sum: {}",
+        calibration_values_sum.to_string().blue()
+    );
 }
 
 // Read a text file and return a vector of strings
@@ -19,4 +23,11 @@ fn read_file(filename: &str) -> Vec<String> {
     file.read_to_string(&mut contents)
         .expect("Error reading file");
     contents.lines().map(|s| s.to_string()).collect()
+}
+
+#[cfg(test)]
+#[test]
+fn test_read_file() {
+    let calibration_values = read_file("./calibration-doc-example.txt");
+    assert_eq!(calibration_values.len(), 4);
 }
