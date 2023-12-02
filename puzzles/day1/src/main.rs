@@ -1,6 +1,7 @@
 mod part_1;
 
 use crate::part_1::calibration_values_sum;
+use crate::part_2::calibration_values_sum_with_word_num;
 use colored::Colorize;
 use std::fs::File;
 use std::io::Read;
@@ -11,8 +12,14 @@ fn main() {
 
     let calibration_values_sum = calibration_values_sum(calibration_lines.clone());
     println!(
-        "Calibration sum: {}",
+        "PART 1 - Calibration sum: {}",
         calibration_values_sum.to_string().blue()
+    );
+    let calibration_values_sum_with_word_num =
+        calibration_values_sum_with_word_num(calibration_lines.clone());
+    println!(
+        "PART 2 - Calibration sum w/ word numbers: {}",
+        calibration_values_sum_with_word_num.to_string().blue()
     );
 }
 
